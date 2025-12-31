@@ -4,6 +4,7 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { usePoolPrice } from "./utils/pool-price";
+import { WveryFaucetModal } from "./wvery-faucet-modal";
 import { ArrowUpDown, ThumbsDown, ThumbsUp, X } from "lucide-react";
 import { useAccount, useChainId, useReadContract, useWriteContract } from "wagmi";
 import { Button } from "~~/components/ui/button";
@@ -36,6 +37,7 @@ export function BorrowInterface({
   const [swapFromAmount, setSwapFromAmount] = useState("");
   const [swapToAmount, setSwapToAmount] = useState("");
   const [swapDirection, setSwapDirection] = useState<"token-to-wvery" | "wvery-to-token">("token-to-wvery");
+  const [showFaucetModal, setShowFaucetModal] = useState(false);
 
   const chainId = useChainId();
   const { writeContractAsync: approveAsync } = useWriteContract();
@@ -709,6 +711,17 @@ export function BorrowInterface({
                     ? "Calculating..."
                     : "Swap Tokens"}
           </Button>
+
+          {/* Show Get WVERY button when WVERY balance is 0 and trying to swap WVERY to token */}
+          {isConnected && formattedWveryAmount === 0 && swapDirection === "wvery-to-token" && (
+            <Button
+              onClick={() => setShowFaucetModal(true)}
+              variant="outline"
+              className="w-full border-[#FF6B7A] text-[#FF6B7A] hover:bg-[#FF6B7A]/10 rounded-xl py-3 mt-2"
+            >
+              Get WVERY Tokens
+            </Button>
+          )}
         </>
       ) : stakingPool?.enabled ? (
         <div className="w-full max-w-md space-y-4">
@@ -843,6 +856,9 @@ export function BorrowInterface({
           </Card>
         </>
       )}
+
+      {/* WVERY Faucet Modal */}
+      <WveryFaucetModal isOpen={showFaucetModal} onClose={() => setShowFaucetModal(false)} />
     </div>
   );
 }
