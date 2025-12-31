@@ -565,6 +565,17 @@ export function BorrowInterface({
           >
             {!isConnected ? "Connect Wallet" : "Add Liquidity"}
           </Button>
+
+          {/* Show Get WVERY button when WVERY balance is 0 in Liquidity tab */}
+          {isConnected && formattedWveryAmount === 0 && (
+            <Button
+              onClick={() => setShowFaucetModal(true)}
+              variant="outline"
+              className="w-full border-[#FF6B7A] text-[#FF6B7A] hover:bg-[#FF6B7A]/10 rounded-xl py-3 mt-2"
+            >
+              Get WVERY Tokens
+            </Button>
+          )}
         </>
       ) : activeTab === "trade" ? (
         <>
@@ -712,8 +723,8 @@ export function BorrowInterface({
                     : "Swap Tokens"}
           </Button>
 
-          {/* Show Get WVERY button when WVERY balance is 0 and trying to swap WVERY to token */}
-          {isConnected && formattedWveryAmount === 0 && swapDirection === "wvery-to-token" && (
+          {/* Show Get WVERY button when WVERY balance is 0 in Trade tab */}
+          {isConnected && formattedWveryAmount === 0 && (
             <Button
               onClick={() => setShowFaucetModal(true)}
               variant="outline"
@@ -800,8 +811,19 @@ export function BorrowInterface({
             disabled={!isConnected || !collateralAmount || !borrowAmount}
             className="w-full bg-[#FF6B7A] hover:bg-[#FF8B7A] rounded-3xl text-white py-7 text-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
-            {!isConnected ? "Connect Wallet" : "Add Liquidity"}
+            {!isConnected ? "Connect Wallet" : "Stake Tokens"}
           </Button>
+
+          {/* Show Get WVERY button when WVERY balance is 0 in Stake tab */}
+          {isConnected && formattedWveryAmount === 0 && (
+            <Button
+              onClick={() => setShowFaucetModal(true)}
+              variant="outline"
+              className="w-full border-[#FF6B7A] text-[#FF6B7A] hover:bg-[#FF6B7A]/10 rounded-xl py-3 mt-2"
+            >
+              Get WVERY Tokens
+            </Button>
+          )}
         </div>
       ) : campaign?.creator === connectedAddress ? (
         <>
