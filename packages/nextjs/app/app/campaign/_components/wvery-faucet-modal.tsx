@@ -45,11 +45,13 @@ export function WveryFaucetModal({ isOpen, onClose }: WveryFaucetModalProps) {
     try {
       // For local development, try to call the mint function
       // Note: This only works if the connected wallet is the contract owner
+      // Mint 50,000 WVERY (6 decimals = 50000 * 10^6)
+      const mintAmount = 50000n * 10n ** 6n; // 50,000,000,000
       await writeContractAsync({
         address: wveryAddress as `0x${string}`,
         abi: wveryAbi,
         functionName: "mint",
-        args: [address, 1n], // Will mint 50,000 WVERY due to contract logic
+        args: [address, mintAmount],
       });
 
       toast.success("Successfully claimed WVERY!", {
