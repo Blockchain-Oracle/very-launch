@@ -173,18 +173,21 @@ export function useWepin(): UseWepinReturn {
           throw new Error(`Unexpected login status: ${userInfo.userStatus?.loginStatus}`);
         }
 
-        // Step 4: Get wallet accounts
-        const accounts = await wepinSDK.getAccounts({
-          networks: ["evmvery", "ethereum"], // Support both Very Network and Ethereum
-          withEoa: true,
-        });
+        // Step 4: Get wallet accounts (without filters - they cause empty results)
+        const accounts = await wepinSDK.getAccounts();
 
         console.log("Wepin accounts:", accounts);
 
-        // Find EVM-compatible account
+        // Find EVM-compatible account (check multiple network name variations)
         const evmAccount = accounts.find(
           (acc: any) =>
-            acc.network === "Ethereum" || acc.network === "evmvery" || (acc.address && acc.address.startsWith("0x")),
+            acc.network === "Ethereum" ||
+            acc.network === "Verychain" ||
+            acc.network === "Very" ||
+            acc.network === "evmVERY" ||
+            acc.network === "evmvery" ||
+            // Fallback: any account with an EVM address
+            (acc.address && acc.address.startsWith("0x")),
         );
 
         if (!evmAccount || !evmAccount.address) {

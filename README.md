@@ -295,8 +295,12 @@ DEPLOYER_PRIVATE_KEY=your_private_key
 
 **packages/nextjs/.env.local**
 ```
-NEXT_PUBLIC_ALCHEMY_API_KEY=your_key
+# WalletConnect - Get from https://cloud.walletconnect.com
 NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=your_project_id
+
+# Wepin Social Login - Get from https://workspace.wepin.io
+NEXT_PUBLIC_WEPIN_APP_ID=your_wepin_app_id
+NEXT_PUBLIC_WEPIN_APP_KEY=your_wepin_app_key
 ```
 
 ---
