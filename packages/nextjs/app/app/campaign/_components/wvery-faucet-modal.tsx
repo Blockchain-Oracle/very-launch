@@ -23,7 +23,7 @@ export function WveryFaucetModal({ isOpen, onClose }: WveryFaucetModalProps) {
   const wveryAddress = contracts && "WrappedVery" in contracts ? contracts.WrappedVery.address : "";
   const wveryAbi = contracts && "WrappedVery" in contracts ? contracts.WrappedVery.abi : [];
 
-  const isLocalChain = chainId === 31337;
+  const networkName = chainId === 31337 ? "Local Testnet" : "Very Network";
 
   const handleClaimFaucet = async () => {
     if (!address) {
@@ -74,8 +74,7 @@ export function WveryFaucetModal({ isOpen, onClose }: WveryFaucetModalProps) {
             Get WVERY Tokens
           </DialogTitle>
           <DialogDescription className="text-gray-400 pt-2">
-            You need WVERY tokens to participate in campaigns.
-            {isLocalChain ? " Claim tokens from the faucet below." : " Get tokens to start investing."}
+            You need WVERY tokens to participate in campaigns. Claim tokens from the faucet below.
           </DialogDescription>
         </DialogHeader>
 
@@ -91,40 +90,22 @@ export function WveryFaucetModal({ isOpen, onClose }: WveryFaucetModalProps) {
             </div>
             <div className="flex items-center justify-between">
               <span className="text-gray-400">Network</span>
-              <span className="text-white">{isLocalChain ? "Local Testnet" : "Very Network"}</span>
+              <span className="text-white">{networkName}</span>
             </div>
           </div>
 
-          {isLocalChain ? (
-            <div className="space-y-3">
-              <p className="text-sm text-gray-400">
-                Click below to claim 50,000 free WVERY tokens for testing. You can claim once per hour.
-              </p>
-              <Button
-                onClick={handleClaimFaucet}
-                disabled={isLoading}
-                className="w-full bg-[#FF6B7A] hover:bg-[#FF8B7A] text-white py-6 rounded-xl text-lg"
-              >
-                {isLoading ? "Claiming..." : "Claim 50,000 WVERY"}
-              </Button>
-            </div>
-          ) : (
-            <div className="space-y-3">
-              <p className="text-sm text-gray-400">To get WVERY tokens on Very Network:</p>
-              <ul className="text-sm text-gray-400 list-disc list-inside space-y-1">
-                <li>Bridge VERY tokens from another chain</li>
-                <li>Purchase WVERY from a supported exchange</li>
-                <li>Contact the VeryLaunch team for testnet tokens</li>
-              </ul>
-              <Button
-                onClick={onClose}
-                variant="outline"
-                className="w-full border-gray-700 text-gray-300 hover:bg-gray-800 py-6 rounded-xl text-lg"
-              >
-                Close
-              </Button>
-            </div>
-          )}
+          <div className="space-y-3">
+            <p className="text-sm text-gray-400">
+              Click below to claim 50,000 free WVERY tokens. You can claim once per hour.
+            </p>
+            <Button
+              onClick={handleClaimFaucet}
+              disabled={isLoading}
+              className="w-full bg-[#FF6B7A] hover:bg-[#FF8B7A] text-white py-6 rounded-xl text-lg"
+            >
+              {isLoading ? "Claiming..." : "Claim 50,000 WVERY"}
+            </Button>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
