@@ -132,6 +132,7 @@ const config: HardhatUserConfig = {
       url: "https://rpc.verylabs.io",
       accounts: [deployerPrivateKey],
       chainId: 4613,
+      gasPrice: 500000000007, // Match network gas price
     },
   },
   // Configuration for harhdat-verify plugin

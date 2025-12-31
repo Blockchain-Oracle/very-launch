@@ -1,5 +1,5 @@
 {
-  "address": "0xa3a4EC5066bede3DaFa13458e578f5Deec1eA6F7",
+  "address": "0xD534db229309E3985401a918f184D8F81fE3F806",
   "abi": [
     {
       "anonymous": false,
@@ -148,12 +148,12 @@
     },
     {
       "inputs": [],
-      "name": "CampaignNotCompleted",
+      "name": "FailedInnerCall",
       "type": "error"
     },
     {
       "inputs": [],
-      "name": "FailedInnerCall",
+      "name": "InactiveCampaign",
       "type": "error"
     },
     {
@@ -173,34 +173,7 @@
     },
     {
       "inputs": [],
-      "name": "NoRewardsAvailable",
-      "type": "error"
-    },
-    {
-      "inputs": [],
       "name": "NotInitializing",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "owner",
-          "type": "address"
-        }
-      ],
-      "name": "OwnableInvalidOwner",
-      "type": "error"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "account",
-          "type": "address"
-        }
-      ],
-      "name": "OwnableUnauthorizedAccount",
       "type": "error"
     },
     {
@@ -221,16 +194,6 @@
     },
     {
       "inputs": [],
-      "name": "StakingNotEnabled",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "StakingPeriodNotEnded",
-      "type": "error"
-    },
-    {
-      "inputs": [],
       "name": "Unauthorized",
       "type": "error"
     },
@@ -239,24 +202,93 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint32",
+          "internalType": "uint256",
           "name": "campaignId",
-          "type": "uint32"
+          "type": "uint256"
         },
         {
           "indexed": true,
           "internalType": "address",
-          "name": "user",
+          "name": "creator",
+          "type": "address"
+        }
+      ],
+      "name": "CampaignCancelled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "campaignId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "creator",
           "type": "address"
         },
         {
           "indexed": false,
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "indexed": false,
           "internalType": "uint256",
-          "name": "amount",
+          "name": "targetFunding",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "totalSupply",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "deadline",
           "type": "uint256"
         }
       ],
-      "name": "EmergencyWithdraw",
+      "name": "CampaignCreated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "campaignId",
+          "type": "uint256"
+        }
+      ],
+      "name": "CampaignPromoted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "campaignId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "totalFunding",
+          "type": "uint256"
+        }
+      ],
+      "name": "FundingCompleted",
       "type": "event"
     },
     {
@@ -277,18 +309,24 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "address",
-          "name": "previousOwner",
-          "type": "address"
+          "internalType": "uint256",
+          "name": "campaignId",
+          "type": "uint256"
         },
         {
-          "indexed": true,
-          "internalType": "address",
-          "name": "newOwner",
-          "type": "address"
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "usdcAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokensAmount",
+          "type": "uint256"
         }
       ],
-      "name": "OwnershipTransferred",
+      "name": "LiquidityAdded",
       "type": "event"
     },
     {
@@ -296,115 +334,9 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint32",
+          "internalType": "uint256",
           "name": "campaignId",
-          "type": "uint32"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "amount",
           "type": "uint256"
-        }
-      ],
-      "name": "RewardsAdded",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "uint32",
-          "name": "campaignId",
-          "type": "uint32"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "user",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "rewards",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "timestamp",
-          "type": "uint256"
-        }
-      ],
-      "name": "RewardsClaimed",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "uint32",
-          "name": "campaignId",
-          "type": "uint32"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "token",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "apy",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "minStakingPeriod",
-          "type": "uint256"
-        }
-      ],
-      "name": "StakingPoolCreated",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "uint32",
-          "name": "campaignId",
-          "type": "uint32"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "newApy",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "bool",
-          "name": "enabled",
-          "type": "bool"
-        }
-      ],
-      "name": "StakingPoolUpdated",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "uint32",
-          "name": "campaignId",
-          "type": "uint32"
         },
         {
           "indexed": true,
@@ -417,6 +349,75 @@
           "internalType": "uint256",
           "name": "amount",
           "type": "uint256"
+        }
+      ],
+      "name": "OgPointsAwarded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "newFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "PlatformFeeUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "campaignId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "investor",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "RefundClaimed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "campaignId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "buyer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "usdcAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokensReceived",
+          "type": "uint256"
         },
         {
           "indexed": false,
@@ -425,7 +426,7 @@
           "type": "uint256"
         }
       ],
-      "name": "TokensStaked",
+      "name": "TokensPurchased",
       "type": "event"
     },
     {
@@ -433,9 +434,9 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint32",
+          "internalType": "uint256",
           "name": "campaignId",
-          "type": "uint32"
+          "type": "uint256"
         },
         {
           "indexed": true,
@@ -448,21 +449,9 @@
           "internalType": "uint256",
           "name": "amount",
           "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "rewards",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "timestamp",
-          "type": "uint256"
         }
       ],
-      "name": "TokensUnstaked",
+      "name": "UserParticipatedInCampaign",
       "type": "event"
     },
     {
@@ -480,7 +469,33 @@
     },
     {
       "inputs": [],
-      "name": "MAX_APY",
+      "name": "CREATOR_ALLOCATION_PCT",
+      "outputs": [
+        {
+          "internalType": "uint16",
+          "name": "",
+          "type": "uint16"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "LIQUIDITY_ALLOCATION_PCT",
+      "outputs": [
+        {
+          "internalType": "uint16",
+          "name": "",
+          "type": "uint16"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MAX_DEADLINE",
       "outputs": [
         {
           "internalType": "uint64",
@@ -493,7 +508,33 @@
     },
     {
       "inputs": [],
-      "name": "MAX_STAKING_PERIOD",
+      "name": "MAX_RESERVE_RATIO",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MAX_TOTAL_SUPPLY",
+      "outputs": [
+        {
+          "internalType": "uint128",
+          "name": "",
+          "type": "uint128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MIN_DEADLINE",
       "outputs": [
         {
           "internalType": "uint64",
@@ -506,12 +547,12 @@
     },
     {
       "inputs": [],
-      "name": "MIN_STAKING_PERIOD",
+      "name": "MIN_TOTAL_SUPPLY",
       "outputs": [
         {
-          "internalType": "uint64",
+          "internalType": "uint128",
           "name": "",
-          "type": "uint64"
+          "type": "uint128"
         }
       ],
       "stateMutability": "view",
@@ -519,12 +560,161 @@
     },
     {
       "inputs": [],
-      "name": "SECONDS_PER_YEAR",
+      "name": "OG_POINTS_ALLOCATION",
       "outputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint16",
           "name": "",
-          "type": "uint256"
+          "type": "uint16"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "TOKENS_FOR_SALE_PCT",
+      "outputs": [
+        {
+          "internalType": "uint16",
+          "name": "",
+          "type": "uint16"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint32",
+          "name": "_campaignId",
+          "type": "uint32"
+        }
+      ],
+      "name": "_getCampaignInfo",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint32",
+              "name": "id",
+              "type": "uint32"
+            },
+            {
+              "internalType": "address",
+              "name": "creator",
+              "type": "address"
+            },
+            {
+              "internalType": "uint128",
+              "name": "targetAmount",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint128",
+              "name": "amountRaised",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint128",
+              "name": "tokensSold",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint128",
+              "name": "totalSupply",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint128",
+              "name": "tokensForSale",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint128",
+              "name": "creatorAllocation",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint128",
+              "name": "liquidityAllocation",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint128",
+              "name": "platformFeeTokens",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint64",
+              "name": "deadline",
+              "type": "uint64"
+            },
+            {
+              "internalType": "address",
+              "name": "tokenAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "bool",
+              "name": "isActive",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "isFundingComplete",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "isCancelled",
+              "type": "bool"
+            },
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "symbol",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "internalType": "uint32",
+              "name": "reserveRatio",
+              "type": "uint32"
+            },
+            {
+              "internalType": "uint32",
+              "name": "blockNumberCreated",
+              "type": "uint32"
+            },
+            {
+              "internalType": "uint128",
+              "name": "promotionalOgPoints",
+              "type": "uint128"
+            },
+            {
+              "internalType": "bool",
+              "name": "isPromoted",
+              "type": "bool"
+            },
+            {
+              "internalType": "address",
+              "name": "uniswapPair",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct Launchpad.CampaignInfo",
+          "name": "",
+          "type": "tuple"
         }
       ],
       "stateMutability": "view",
@@ -539,161 +729,251 @@
         },
         {
           "internalType": "uint128",
-          "name": "_amount",
+          "name": "_usdcAmount",
           "type": "uint128"
         }
       ],
-      "name": "addRewards",
+      "name": "buyTokens",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
-      "inputs": [
+      "inputs": [],
+      "name": "campaignCount",
+      "outputs": [
         {
           "internalType": "uint32",
-          "name": "_campaignId",
+          "name": "",
           "type": "uint32"
-        },
-        {
-          "internalType": "uint128",
-          "name": "_amount",
-          "type": "uint128"
-        },
-        {
-          "internalType": "uint64",
-          "name": "_duration",
-          "type": "uint64"
         }
       ],
-      "name": "calculateRewards",
-      "outputs": [
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
         {
           "internalType": "uint256",
           "name": "",
           "type": "uint256"
         }
       ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint32",
-          "name": "_campaignId",
-          "type": "uint32"
-        }
-      ],
-      "name": "claimRewards",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint32",
-          "name": "_campaignId",
-          "type": "uint32"
-        },
-        {
-          "internalType": "uint64",
-          "name": "_apy",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint64",
-          "name": "_minStakingPeriod",
-          "type": "uint64"
-        }
-      ],
-      "name": "createStakingPool",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint32",
-          "name": "_campaignId",
-          "type": "uint32"
-        }
-      ],
-      "name": "emergencyWithdraw",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint32",
-          "name": "_campaignId",
-          "type": "uint32"
-        }
-      ],
-      "name": "getPoolStakers",
-      "outputs": [
-        {
-          "internalType": "address[]",
-          "name": "",
-          "type": "address[]"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint32",
-          "name": "_campaignId",
-          "type": "uint32"
-        }
-      ],
-      "name": "getStakingPoolInfo",
+      "name": "campaigns",
       "outputs": [
         {
           "internalType": "address",
-          "name": "stakingToken",
+          "name": "creator",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IERC20",
+          "name": "token",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "uniswapPair",
           "type": "address"
         },
         {
           "internalType": "uint128",
-          "name": "totalStaked",
+          "name": "targetAmount",
           "type": "uint128"
         },
         {
           "internalType": "uint128",
-          "name": "rewardPool",
+          "name": "amountRaised",
           "type": "uint128"
         },
         {
           "internalType": "uint64",
-          "name": "apy",
+          "name": "deadline",
           "type": "uint64"
+        },
+        {
+          "internalType": "uint32",
+          "name": "reserveRatio",
+          "type": "uint32"
+        },
+        {
+          "internalType": "uint32",
+          "name": "blockNumberCreated",
+          "type": "uint32"
+        },
+        {
+          "internalType": "bool",
+          "name": "isActive",
+          "type": "bool"
+        },
+        {
+          "internalType": "bool",
+          "name": "isFundingComplete",
+          "type": "bool"
+        },
+        {
+          "internalType": "bool",
+          "name": "isCancelled",
+          "type": "bool"
+        },
+        {
+          "internalType": "bool",
+          "name": "isPromoted",
+          "type": "bool"
+        },
+        {
+          "internalType": "uint128",
+          "name": "tokensSold",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "totalSupply",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "tokensForSale",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "creatorAllocation",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "liquidityAllocation",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "platformFeeTokens",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "promotionalOgPoints",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint32",
+          "name": "id",
+          "type": "uint32"
+        },
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "symbol",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "description",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint32",
+          "name": "_campaignId",
+          "type": "uint32"
+        }
+      ],
+      "name": "cancelCampaign",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint32",
+          "name": "_campaignId",
+          "type": "uint32"
+        }
+      ],
+      "name": "claimRefund",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_name",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_symbol",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_description",
+          "type": "string"
+        },
+        {
+          "internalType": "uint128",
+          "name": "_targetFunding",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "_totalSupply",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint32",
+          "name": "_reserveRatio",
+          "type": "uint32"
         },
         {
           "internalType": "uint64",
-          "name": "minStakingPeriod",
+          "name": "_deadline",
           "type": "uint64"
-        },
+        }
+      ],
+      "name": "createCampaign",
+      "outputs": [
         {
-          "internalType": "bool",
-          "name": "enabled",
-          "type": "bool"
-        },
+          "internalType": "uint32",
+          "name": "campaignId",
+          "type": "uint32"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
         {
-          "internalType": "bool",
-          "name": "emergencyMode",
-          "type": "bool"
+          "internalType": "address",
+          "name": "",
+          "type": "address"
         },
         {
           "internalType": "uint256",
-          "name": "stakerCount",
+          "name": "",
           "type": "uint256"
+        }
+      ],
+      "name": "creatorCampaigns",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
         }
       ],
       "stateMutability": "view",
@@ -712,86 +992,43 @@
           "type": "address"
         }
       ],
-      "name": "getUserStakeInfo",
+      "name": "getUserInvestment",
       "outputs": [
         {
           "internalType": "uint128",
-          "name": "amount",
+          "name": "",
           "type": "uint128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_contractOwner",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_usdcToken",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_uniswapRouter",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_uniswapFactory",
+          "type": "address"
         },
         {
           "internalType": "uint128",
-          "name": "rewards",
+          "name": "_promotionFee",
           "type": "uint128"
-        },
-        {
-          "internalType": "uint64",
-          "name": "stakingTime",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint64",
-          "name": "timeToUnlock",
-          "type": "uint64"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_user",
-          "type": "address"
-        }
-      ],
-      "name": "getUserStakingPools",
-      "outputs": [
-        {
-          "internalType": "uint32[]",
-          "name": "",
-          "type": "uint32[]"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint32",
-          "name": "",
-          "type": "uint32"
-        },
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "hasStaked",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_launchpad",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "_owner",
-          "type": "address"
         }
       ],
       "name": "initialize",
@@ -800,106 +1037,32 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "launchpad",
-      "outputs": [
-        {
-          "internalType": "contract ILaunchpad",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "owner",
-      "outputs": [
+      "inputs": [
         {
           "internalType": "address",
           "name": "",
           "type": "address"
         }
       ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint32",
-          "name": "",
-          "type": "uint32"
-        },
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "poolStakers",
+      "name": "ogPoints",
       "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "renounceOwnership",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint32",
-          "name": "_campaignId",
-          "type": "uint32"
-        },
-        {
-          "internalType": "bool",
-          "name": "_emergencyMode",
-          "type": "bool"
-        }
-      ],
-      "name": "setEmergencyMode",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint32",
-          "name": "_campaignId",
-          "type": "uint32"
-        },
         {
           "internalType": "uint128",
-          "name": "_amount",
+          "name": "",
           "type": "uint128"
         }
       ],
-      "name": "stakeTokens",
-      "outputs": [],
-      "stateMutability": "nonpayable",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "inputs": [],
-      "name": "stakingPoolCount",
+      "name": "platformFeePercentage",
       "outputs": [
         {
-          "internalType": "uint32",
+          "internalType": "uint16",
           "name": "",
-          "type": "uint32"
+          "type": "uint16"
         }
       ],
       "stateMutability": "view",
@@ -909,144 +1072,75 @@
       "inputs": [
         {
           "internalType": "uint32",
-          "name": "",
+          "name": "_campaignId",
           "type": "uint32"
         }
       ],
-      "name": "stakingPools",
+      "name": "promoteCampaign",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "promotionFee",
+      "outputs": [
+        {
+          "internalType": "uint128",
+          "name": "",
+          "type": "uint128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalPlatformFees",
+      "outputs": [
+        {
+          "internalType": "uint128",
+          "name": "",
+          "type": "uint128"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "uniswapFactory",
+      "outputs": [
+        {
+          "internalType": "contract IUniswapV2Factory",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "uniswapRouter",
+      "outputs": [
+        {
+          "internalType": "contract IUniswapV2Router",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "usdcToken",
       "outputs": [
         {
           "internalType": "contract IERC20",
-          "name": "stakingToken",
-          "type": "address"
-        },
-        {
-          "internalType": "uint128",
-          "name": "totalStaked",
-          "type": "uint128"
-        },
-        {
-          "internalType": "uint128",
-          "name": "rewardPool",
-          "type": "uint128"
-        },
-        {
-          "internalType": "uint64",
-          "name": "apy",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint64",
-          "name": "minStakingPeriod",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint32",
-          "name": "campaignId",
-          "type": "uint32"
-        },
-        {
-          "internalType": "bool",
-          "name": "enabled",
-          "type": "bool"
-        },
-        {
-          "internalType": "bool",
-          "name": "emergencyMode",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "newOwner",
-          "type": "address"
-        }
-      ],
-      "name": "transferOwnership",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint32",
-          "name": "_campaignId",
-          "type": "uint32"
-        },
-        {
-          "internalType": "uint128",
-          "name": "_amount",
-          "type": "uint128"
-        }
-      ],
-      "name": "unstakeTokens",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint32",
-          "name": "_campaignId",
-          "type": "uint32"
-        },
-        {
-          "internalType": "uint64",
-          "name": "_apy",
-          "type": "uint64"
-        },
-        {
-          "internalType": "bool",
-          "name": "_enabled",
-          "type": "bool"
-        }
-      ],
-      "name": "updateStakingPool",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint32",
-          "name": "",
-          "type": "uint32"
-        },
-        {
-          "internalType": "address",
           "name": "",
           "type": "address"
-        }
-      ],
-      "name": "userStakes",
-      "outputs": [
-        {
-          "internalType": "uint128",
-          "name": "amount",
-          "type": "uint128"
-        },
-        {
-          "internalType": "uint128",
-          "name": "rewards",
-          "type": "uint128"
-        },
-        {
-          "internalType": "uint64",
-          "name": "stakingTime",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint64",
-          "name": "lastRewardUpdate",
-          "type": "uint64"
         }
       ],
       "stateMutability": "view",
@@ -1065,12 +1159,36 @@
           "type": "uint256"
         }
       ],
-      "name": "userStakingPools",
+      "name": "userParticipatedCampaigns",
       "outputs": [
         {
           "internalType": "uint32",
           "name": "",
           "type": "uint32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "userParticipation",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
         }
       ],
       "stateMutability": "view",
@@ -1098,78 +1216,64 @@
       "type": "constructor"
     }
   ],
-  "transactionHash": "0xb55413b9355a24866d970b8e15a24e58d73b93e0290a5fe6a47580112f700432",
+  "transactionHash": "0xea19e28f51552cf74a122cb2026b83c0f6a59e33aa0c0864fda259c1641ddc39",
   "receipt": {
-    "to": "0x0000000000000000000000000000000000000000",
-    "from": "0x7FBbE68068A3Aa7E479A1E51e792F4C2073b018f",
-    "contractAddress": "0xa3a4EC5066bede3DaFa13458e578f5Deec1eA6F7",
-    "transactionIndex": 1,
-    "gasUsed": "11043837",
-    "logsBloom": "0x00000000000010000000000000001000400000000000000000800000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000002000001000000000000000000000040000000000000020000000000000000000800000001800000000000000000000000400000000000000000000800000000000000000000000080000000000000800000000000000000000000000000000000000000000000000000000000000000000000000020000000002002000000000000000000000404000000000000000020000000000000000000000000000000000000000000000000000000000040000020",
-    "blockHash": "0xac1432761bc8d1e6122413d8e2cd09d53cb69052b7842e959003d4ba2b7aa8ea",
-    "transactionHash": "0xb55413b9355a24866d970b8e15a24e58d73b93e0290a5fe6a47580112f700432",
+    "to": null,
+    "from": "0x7D71f82611BA86BC302A655EC3D2050E98BAf49C",
+    "contractAddress": "0xD534db229309E3985401a918f184D8F81fE3F806",
+    "transactionIndex": 0,
+    "gasUsed": "859486",
+    "logsBloom": "0x00000010000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000010000000000000000000800000000000000000000000800000000001000000000800000000000000000000000080800000000010800000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000404000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x5f690faa99180d5a1839fea6d270fd1b6d0da8b534ccaab1ff512703d9520b2b",
+    "transactionHash": "0xea19e28f51552cf74a122cb2026b83c0f6a59e33aa0c0864fda259c1641ddc39",
     "logs": [
       {
-        "transactionIndex": 1,
-        "blockNumber": 170135228,
-        "transactionHash": "0xb55413b9355a24866d970b8e15a24e58d73b93e0290a5fe6a47580112f700432",
-        "address": "0xa3a4EC5066bede3DaFa13458e578f5Deec1eA6F7",
+        "transactionIndex": 0,
+        "blockNumber": 4131497,
+        "transactionHash": "0xea19e28f51552cf74a122cb2026b83c0f6a59e33aa0c0864fda259c1641ddc39",
+        "address": "0xD534db229309E3985401a918f184D8F81fE3F806",
         "topics": [
           "0xbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b",
-          "0x000000000000000000000000f57ff8ca5ee4f6cfae92d04d4564487b297f5271"
+          "0x000000000000000000000000200e106e4a2fe06cb0c3b28d7da3ff82e415a88a"
         ],
         "data": "0x",
         "logIndex": 0,
-        "blockHash": "0xac1432761bc8d1e6122413d8e2cd09d53cb69052b7842e959003d4ba2b7aa8ea"
+        "blockHash": "0x5f690faa99180d5a1839fea6d270fd1b6d0da8b534ccaab1ff512703d9520b2b"
       },
       {
-        "transactionIndex": 1,
-        "blockNumber": 170135228,
-        "transactionHash": "0xb55413b9355a24866d970b8e15a24e58d73b93e0290a5fe6a47580112f700432",
-        "address": "0xa3a4EC5066bede3DaFa13458e578f5Deec1eA6F7",
-        "topics": [
-          "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000007fbbe68068a3aa7e479a1e51e792f4c2073b018f"
-        ],
-        "data": "0x",
-        "logIndex": 1,
-        "blockHash": "0xac1432761bc8d1e6122413d8e2cd09d53cb69052b7842e959003d4ba2b7aa8ea"
-      },
-      {
-        "transactionIndex": 1,
-        "blockNumber": 170135228,
-        "transactionHash": "0xb55413b9355a24866d970b8e15a24e58d73b93e0290a5fe6a47580112f700432",
-        "address": "0xa3a4EC5066bede3DaFa13458e578f5Deec1eA6F7",
+        "transactionIndex": 0,
+        "blockNumber": 4131497,
+        "transactionHash": "0xea19e28f51552cf74a122cb2026b83c0f6a59e33aa0c0864fda259c1641ddc39",
+        "address": "0xD534db229309E3985401a918f184D8F81fE3F806",
         "topics": [
           "0xc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d2"
         ],
         "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "logIndex": 2,
-        "blockHash": "0xac1432761bc8d1e6122413d8e2cd09d53cb69052b7842e959003d4ba2b7aa8ea"
+        "logIndex": 1,
+        "blockHash": "0x5f690faa99180d5a1839fea6d270fd1b6d0da8b534ccaab1ff512703d9520b2b"
       },
       {
-        "transactionIndex": 1,
-        "blockNumber": 170135228,
-        "transactionHash": "0xb55413b9355a24866d970b8e15a24e58d73b93e0290a5fe6a47580112f700432",
-        "address": "0xa3a4EC5066bede3DaFa13458e578f5Deec1eA6F7",
+        "transactionIndex": 0,
+        "blockNumber": 4131497,
+        "transactionHash": "0xea19e28f51552cf74a122cb2026b83c0f6a59e33aa0c0864fda259c1641ddc39",
+        "address": "0xD534db229309E3985401a918f184D8F81fE3F806",
         "topics": [
           "0x7e644d79422f17c01e4894b5f4f588d331ebfa28653d42ae832dc59e38c9798f"
         ],
-        "data": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ab9925e795125d622334308eade6c10c33b88037",
-        "logIndex": 3,
-        "blockHash": "0xac1432761bc8d1e6122413d8e2cd09d53cb69052b7842e959003d4ba2b7aa8ea"
+        "data": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000915584dae87766ea94a1ab16ade976b9c75b7dca",
+        "logIndex": 2,
+        "blockHash": "0x5f690faa99180d5a1839fea6d270fd1b6d0da8b534ccaab1ff512703d9520b2b"
       }
     ],
-    "blockNumber": 170135228,
-    "cumulativeGasUsed": "21000",
+    "blockNumber": 4131497,
+    "cumulativeGasUsed": "859486",
     "status": 1,
     "byzantium": true
   },
   "args": [
-    "0xf57FF8CA5Ee4f6CFAe92D04d4564487B297f5271",
-    "0xAB9925e795125d622334308EADE6c10c33b88037",
-    "0x485cc955000000000000000000000000bb88e6126fdcd4ae6b9e3038a2255d66645aea7a0000000000000000000000007fbbe68068a3aa7e479a1e51e792f4c2073b018f"
+    "0x200E106E4A2FE06cb0c3b28d7DA3Ff82E415a88A",
+    "0x915584dAE87766Ea94A1AB16Ade976b9C75B7dCa",
+    "0x82eab3470000000000000000000000007d71f82611ba86bc302a655ec3d2050e98baf49c0000000000000000000000009c928f9cd5f7aaa5d933b63d7e2f511223a9fc98000000000000000000000000b81713b44ef5f68ef921a8637fabc025e63b3523000000000000000000000000001da752acd5e96077ac5cd757dc9ebad109210a0000000000000000000000000000000000000000000000000000000002faf080"
   ],
   "numDeployments": 1,
   "solcInputHash": "0e89febeebc7444140de8e67c9067d2c",
@@ -1179,11 +1283,14 @@
   "execute": {
     "methodName": "initialize",
     "args": [
-      "0xBb88E6126FdcD4ae6b9e3038a2255D66645AEA7a",
-      "0x7FBbE68068A3Aa7E479A1E51e792F4C2073b018f"
+      "0x7D71f82611BA86BC302A655EC3D2050E98BAf49C",
+      "0x9c928F9cD5F7AAa5d933B63d7E2f511223A9fC98",
+      "0xb81713B44ef5F68eF921A8637FabC025e63B3523",
+      "0x001Da752ACD5e96077Ac5Cd757dC9ebAd109210A",
+      50000000
     ]
   },
-  "implementation": "0xf57FF8CA5Ee4f6CFAe92D04d4564487B297f5271",
+  "implementation": "0x200E106E4A2FE06cb0c3b28d7DA3Ff82E415a88A",
   "devdoc": {
     "details": "This contract implements a proxy that is upgradeable by an admin. To avoid https://medium.com/nomic-labs-blog/malicious-backdoors-in-ethereum-proxies-62629adf3357[proxy selector clashing], which can potentially be used in an attack, this contract uses the https://blog.openzeppelin.com/the-transparent-proxy-pattern/[transparent proxy pattern]. This pattern implies two things that go hand in hand: 1. If any account other than the admin calls the proxy, the call will be forwarded to the implementation, even if that call matches one of the admin functions exposed by the proxy itself. 2. If the admin calls the proxy, it can access the admin functions, but its calls will never be forwarded to the implementation. If the admin tries to call a function on the implementation it will fail with an error that says \"admin cannot fallback to proxy target\". These properties mean that the admin account can only be used for admin actions like upgrading the proxy or changing the admin, so it's best if it's a dedicated account that is not used for anything else. This will avoid headaches due to sudden errors when trying to call a function from the proxy implementation. Our recommendation is for the dedicated account to be an instance of the {ProxyAdmin} contract. If set up this way, you should think of the `ProxyAdmin` instance as the real administrative interface of your proxy.",
     "kind": "dev",
