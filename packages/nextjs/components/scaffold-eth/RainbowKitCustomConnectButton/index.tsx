@@ -8,6 +8,8 @@ import { AddressInfoModal } from "./AddressInfoModal";
 import { AddressQRCodeModal } from "./AddressQRCodeModal";
 import { RevealBurnerPKModal } from "./RevealBurnerPKModal";
 import { WalletSelectionModal } from "./WalletSelectionModal";
+import { WepinAddressDropdown } from "./WepinAddressDropdown";
+import { WepinAddressModal } from "./WepinAddressModal";
 import { WrongNetworkDropdown } from "./WrongNetworkDropdown";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Address } from "viem";
@@ -66,22 +68,28 @@ export const RainbowKitCustomConnectButton = ({ bg, useModal = false }: { bg: st
 
                 // Handle Wepin connection (Wepin doesn't support network switching)
                 if (wepinConnected && wepinAddress) {
-                  const AddressComponent = useModal ? AddressInfoModal : AddressInfoDropdown;
                   return (
                     <div className="flex items-center">
                       {!useModal && (
                         <div className="sm:flex flex-col items-center mr-1 hidden">
                           <Balance address={wepinAddress as Address} className="min-h-0 h-auto" />
                           <span className="text-xs" style={{ color: networkColor }}>
-                            {targetNetwork.name} (Wepin)
+                            {targetNetwork.name}
                           </span>
                         </div>
                       )}
-                      <AddressComponent
-                        address={wepinAddress as Address}
-                        displayName="Wepin Wallet"
-                        blockExplorerAddressLink={blockExplorerAddressLink}
-                      />
+                      {/* Use Wepin-specific components (no network switching, uses Wepin disconnect) */}
+                      {useModal ? (
+                        <WepinAddressModal
+                          address={wepinAddress as Address}
+                          blockExplorerAddressLink={blockExplorerAddressLink}
+                        />
+                      ) : (
+                        <WepinAddressDropdown
+                          address={wepinAddress as Address}
+                          blockExplorerAddressLink={blockExplorerAddressLink}
+                        />
+                      )}
                       <AddressQRCodeModal address={wepinAddress as Address} modalId="qrcode-modal" />
                     </div>
                   );
