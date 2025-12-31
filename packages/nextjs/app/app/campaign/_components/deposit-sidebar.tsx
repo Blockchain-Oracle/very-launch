@@ -22,7 +22,7 @@ export function DepositSidebar({ campaign }: { campaign: ICampaign | undefined }
 
   // Use Wepin address if connected via Wepin, otherwise use wagmi address
   const connectedAddress = wepinConnected ? (wepinAddress as `0x${string}`) : wagmiAddress;
-  const isAnyWalletConnected = wepinConnected || !!wagmiAddress;
+  const isWalletConnected = wepinConnected || !!wagmiAddress;
   const [amount, setAmount] = useState<number>(0);
   const [showFaucetModal, setShowFaucetModal] = useState(false);
   const { writeContractAsync } = useWriteContract();
@@ -217,16 +217,25 @@ export function DepositSidebar({ campaign }: { campaign: ICampaign | undefined }
           </div>
         </div>
 
-        {/* Show Get WVERY button when balance is zero */}
-        {formattedWveryAmount === 0 && connectedAddress && (
+        {/* Show Get WVERY link - always visible when wallet connected */}
+        {isWalletConnected && (
           <div className="mt-4 pt-4 border-t border-gray-700">
-            <Button
-              onClick={() => setShowFaucetModal(true)}
-              variant="outline"
-              className="w-full border-[#FF6B7A] text-[#FF6B7A] hover:bg-[#FF6B7A]/10 rounded-xl py-3"
-            >
-              Get WVERY Tokens
-            </Button>
+            {formattedWveryAmount === 0 ? (
+              <Button
+                onClick={() => setShowFaucetModal(true)}
+                variant="outline"
+                className="w-full border-[#FF6B7A] text-[#FF6B7A] hover:bg-[#FF6B7A]/10 rounded-xl py-3"
+              >
+                Get WVERY Tokens
+              </Button>
+            ) : (
+              <button
+                onClick={() => setShowFaucetModal(true)}
+                className="text-sm text-[#FF6B7A] hover:text-[#FF8B7A] underline w-full text-center"
+              >
+                Need more WVERY?
+              </button>
+            )}
           </div>
         )}
       </div>

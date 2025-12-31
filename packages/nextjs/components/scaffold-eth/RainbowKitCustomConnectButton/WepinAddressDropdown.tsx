@@ -90,12 +90,7 @@ export const WepinAddressDropdown = ({ address, blockExplorerAddressLink }: Wepi
             type="button"
           >
             <ArrowTopRightOnSquareIcon className="h-5 w-5 sm:h-6 sm:w-4 flex-shrink-0" />
-            <a
-              target="_blank"
-              href={blockExplorerAddressLink}
-              rel="noopener noreferrer"
-              className="whitespace-nowrap"
-            >
+            <a target="_blank" href={blockExplorerAddressLink} rel="noopener noreferrer" className="whitespace-nowrap">
               View on Block Explorer
             </a>
           </button>

@@ -17,20 +17,43 @@ async function main() {
   console.log("║   VeryLaunch - Full Development Environment Setup        ║");
   console.log("╚═══════════════════════════════════════════════════════════╝\n");
 
-  const [deployer, user1, user2] = await ethers.getSigners();
+  const signers = await ethers.getSigners();
+  const deployer = signers[0];
+  // On Very Network (single signer), use deployer for all roles
+  const user1 = signers[1] || deployer;
+  const user2 = signers[2] || deployer;
+
+  const network = await ethers.provider.getNetwork();
+  const isVeryNetwork = network.chainId === 4613n;
+
+  console.log("Network:", isVeryNetwork ? "Very Network (4613)" : `Chain ID ${network.chainId}`);
   console.log("Deployer:", deployer.address);
-  console.log("User1:", user1.address);
-  console.log("User2:", user2.address);
+  if (signers.length > 1) {
+    console.log("User1:", user1.address);
+    console.log("User2:", user2.address);
+  } else {
+    console.log("(Single signer mode - deployer used for all operations)");
+  }
   console.log();
 
   // ============================================================================
-  // STEP 1: Deploy All Contracts
+  // STEP 1: Deploy All Contracts (skip on Very Network if already deployed)
   // ============================================================================
-  console.log("📦 STEP 1: Deploying all contracts...\n");
+  console.log("📦 STEP 1: Checking/Deploying contracts...\n");
 
-  await hre.run("deploy");
-
-  console.log("✅ All contracts deployed!\n");
+  // Check if contracts are already deployed
+  let alreadyDeployed = false;
+  try {
+    await hre.deployments.get("WrappedVery");
+    await hre.deployments.get("Launchpad");
+    alreadyDeployed = true;
+    console.log("✅ Contracts already deployed, skipping deployment step.\n");
+  } catch {
+    // Contracts not deployed, run deploy
+    console.log("Deploying all contracts...");
+    await hre.run("deploy");
+    console.log("✅ All contracts deployed!\n");
+  }
 
   // Get deployed contract addresses
   const wveryDeployment = await hre.deployments.get("WrappedVery");

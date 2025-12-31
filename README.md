@@ -40,76 +40,15 @@ VeryLaunch solves these problems through deterministic smart contracts that auto
 
 ## Architecture
 
-```mermaid
-graph TB
-    subgraph Frontend["Frontend Layer"]
-        UI[Next.js Application]
-        RK[RainbowKit Wallet]
-        WP[Wepin Social Login]
-    end
-
-    subgraph Contracts["Smart Contract Layer"]
-        LP[Launchpad.sol]
-        LPV2[LaunchpadV2.sol]
-        TK[Token.sol]
-        STK[CampaignTokenStaking.sol]
-        WV[WrappedVery.sol]
-    end
-
-    subgraph DEX["DEX Layer"]
-        DF[DexFactory.sol]
-        DR[DexRouter.sol]
-        DP[DexPair.sol]
-    end
-
-    subgraph Network["Very Network"]
-        RPC[RPC: rpc.verylabs.io]
-        EXP[Explorer: explorer.verylabs.io]
-    end
-
-    UI --> RK
-    UI --> WP
-    RK --> LP
-    WP --> LP
-    LP --> TK
-    LP --> LPV2
-    LP --> DF
-    LPV2 --> DR
-    DF --> DP
-    STK --> TK
-    LP --> WV
-
-    LP --> RPC
-    RPC --> EXP
-```
+<p align="center">
+  <img src="docs/Architecture.png" alt="VeryLaunch Architecture" width="800"/>
+</p>
 
 ### Component Interaction Flow
 
-```mermaid
-sequenceDiagram
-    participant User
-    participant Frontend
-    participant Launchpad
-    participant Token
-    participant DEX
-
-    User->>Frontend: Create Campaign
-    Frontend->>Launchpad: createCampaign()
-    Launchpad->>Token: Deploy ERC20
-    Token-->>Launchpad: Token Address
-    Launchpad-->>Frontend: Campaign Created
-
-    User->>Frontend: Purchase Tokens
-    Frontend->>Launchpad: buyTokens(campaignId, amount)
-    Launchpad->>Launchpad: Calculate Bonding Curve Price
-    Launchpad-->>User: Tokens Transferred
-
-    Note over Launchpad: When target reached or 50% sold
-
-    Launchpad->>DEX: Create Liquidity Pool
-    DEX-->>Launchpad: Pool Address
-    Launchpad->>DEX: Add Liquidity (50% WVERY + 25% Tokens)
-```
+<p align="center">
+  <img src="docs/Component-Interaction.png" alt="Component Interaction Flow" width="800"/>
+</p>
 
 ---
 
@@ -117,14 +56,9 @@ sequenceDiagram
 
 VeryLaunch implements a Bancor-style bonding curve that mathematically determines token prices based on supply:
 
-```mermaid
-graph LR
-    subgraph Curve["Bonding Curve"]
-        A[Early Buyers] -->|Lower Price| B[Price Increase]
-        B -->|More Purchases| C[Higher Price]
-        C -->|Supply Sold| D[Liquidity Deployment]
-    end
-```
+<p align="center">
+  <img src="docs/Bonding-Curve.png" alt="Bonding Curve Mechanism" width="800"/>
+</p>
 
 The bonding curve formula ensures:
 

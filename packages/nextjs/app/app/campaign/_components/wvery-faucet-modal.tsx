@@ -5,13 +5,7 @@ import Image from "next/image";
 import { toast } from "sonner";
 import { useAccount, useChainId, useWriteContract } from "wagmi";
 import { Button } from "~~/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "~~/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "~~/components/ui/dialog";
 import deployedContracts from "~~/contracts/deployedContracts";
 
 interface WveryFaucetModalProps {
@@ -116,9 +110,7 @@ export function WveryFaucetModal({ isOpen, onClose }: WveryFaucetModalProps) {
             </div>
           ) : (
             <div className="space-y-3">
-              <p className="text-sm text-gray-400">
-                To get WVERY tokens on Very Network:
-              </p>
+              <p className="text-sm text-gray-400">To get WVERY tokens on Very Network:</p>
               <ul className="text-sm text-gray-400 list-disc list-inside space-y-1">
                 <li>Bridge VERY tokens from another chain</li>
                 <li>Purchase WVERY from a supported exchange</li>
