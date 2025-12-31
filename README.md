@@ -1,7 +1,9 @@
 # VeryLaunch
 
 <p align="center">
-  <img src="packages/nextjs/public/logo.svg" alt="VeryLaunch Logo" width="200"/>
+  <img src="packages/nextjs/public/logo.svg" alt="VeryLaunch" height="80"/>
+  <img width="40"/>
+  <img src="packages/nextjs/public/very.svg" alt="Very Network" height="80"/>
 </p>
 
 <p align="center">
@@ -370,7 +372,3 @@ MIT License
 ## Acknowledgments
 
 Built for the Very Network Hackathon 2025.
-
-<p align="center">
-  <img src="packages/nextjs/public/very.svg" alt="Very Network" width="50"/>
-</p>
