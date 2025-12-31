@@ -43,14 +43,13 @@ export function WveryFaucetModal({ isOpen, onClose }: WveryFaucetModalProps) {
     });
 
     try {
-      // For local development, try to call the mint function
-      // Note: This only works if the connected wallet is the contract owner
-      // Contract multiplies amount by 50000e6, so mint(1) = 50,000 WVERY
+      // Call the faucet function - anyone can mint 50,000 WVERY
+      // Has 1 hour cooldown to prevent spam
       await writeContractAsync({
         address: wveryAddress as `0x${string}`,
         abi: wveryAbi,
-        functionName: "mint",
-        args: [address, 1n], // 1 * 50000e6 = 50,000 WVERY
+        functionName: "faucet",
+        args: [],
       });
 
       toast.success("Successfully claimed WVERY!", {
@@ -60,15 +59,13 @@ export function WveryFaucetModal({ isOpen, onClose }: WveryFaucetModalProps) {
       onClose();
     } catch (error: any) {
       console.error("Faucet claim error:", error);
-      toast.error(
-        error.message?.includes("you are not owner")
-          ? "Only the contract owner can mint WVERY. Please contact the team for tokens."
-          : error.message || "Failed to claim WVERY",
-        {
-          id: toastId,
-          position: "top-right",
-        }
-      );
+      const errorMessage = error.message?.includes("cooldown")
+        ? "Please wait 1 hour between faucet claims."
+        : error.message || "Failed to claim WVERY";
+      toast.error(errorMessage, {
+        id: toastId,
+        position: "top-right",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -107,14 +104,14 @@ export function WveryFaucetModal({ isOpen, onClose }: WveryFaucetModalProps) {
           {isLocalChain ? (
             <div className="space-y-3">
               <p className="text-sm text-gray-400">
-                Click below to claim free WVERY tokens for testing. This only works if you&apos;re the contract owner.
+                Click below to claim 50,000 free WVERY tokens for testing. You can claim once per hour.
               </p>
               <Button
                 onClick={handleClaimFaucet}
                 disabled={isLoading}
                 className="w-full bg-[#FF6B7A] hover:bg-[#FF8B7A] text-white py-6 rounded-xl text-lg"
               >
-                {isLoading ? "Claiming..." : "Claim WVERY from Faucet"}
+                {isLoading ? "Claiming..." : "Claim 50,000 WVERY"}
               </Button>
             </div>
           ) : (
