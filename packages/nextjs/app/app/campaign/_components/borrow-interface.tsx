@@ -10,6 +10,7 @@ import { Button } from "~~/components/ui/button";
 import { Card } from "~~/components/ui/card";
 import deployedContracts from "~~/contracts/deployedContracts";
 import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
+import { useWepin } from "~~/hooks/useWepin";
 import { formatAmount } from "~~/lib/utils";
 import { ICampaign, IStakingPool } from "~~/types/interface";
 
@@ -20,7 +21,13 @@ export function BorrowInterface({
   campaign: ICampaign;
   stakingPool: IStakingPool | undefined;
 }) {
-  const { address: connectedAddress, isConnected } = useAccount();
+  const { address: wagmiAddress, isConnected: wagmiConnected } = useAccount();
+  const { isConnected: wepinConnected, walletAddress: wepinAddress } = useWepin();
+
+  // Use Wepin address if connected via Wepin, otherwise use wagmi address
+  const connectedAddress = wepinConnected ? (wepinAddress as `0x${string}`) : wagmiAddress;
+  const isConnected = wepinConnected || wagmiConnected;
+
   const [activeTab, setActiveTab] = useState<"trade" | "liquidity" | "stake">("trade");
   const [collateralAmount, setCollateralAmount] = useState("");
   const [borrowAmount, setBorrowAmount] = useState("");

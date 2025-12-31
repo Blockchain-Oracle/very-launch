@@ -11,12 +11,18 @@ import { Button } from "~~/components/ui/button";
 import { Skeleton } from "~~/components/ui/skeleton";
 import deployedContracts from "~~/contracts/deployedContracts";
 import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
+import { useWepin } from "~~/hooks/useWepin";
 import { formatAmount } from "~~/lib/utils";
 import { ICampaign } from "~~/types/interface";
 
 export function DepositSidebar({ campaign }: { campaign: ICampaign | undefined }) {
-  const { address: connectedAddress } = useAccount();
+  const { address: wagmiAddress } = useAccount();
+  const { isConnected: wepinConnected, walletAddress: wepinAddress } = useWepin();
   const chainId = useChainId();
+
+  // Use Wepin address if connected via Wepin, otherwise use wagmi address
+  const connectedAddress = wepinConnected ? (wepinAddress as `0x${string}`) : wagmiAddress;
+  const isAnyWalletConnected = wepinConnected || !!wagmiAddress;
   const [amount, setAmount] = useState<number>(0);
   const [showFaucetModal, setShowFaucetModal] = useState(false);
   const { writeContractAsync } = useWriteContract();
@@ -266,7 +272,10 @@ export function DepositSidebar({ campaign }: { campaign: ICampaign | undefined }
 
       <ConnectButton.Custom>
         {({ account, chain, openConnectModal, mounted }) => {
-          const isConnected = mounted && account && chain;
+          // Check if connected via RainbowKit OR Wepin
+          const isRainbowKitConnected = mounted && account && chain;
+          const isConnected = isRainbowKitConnected || wepinConnected;
+
           return isConnected ? (
             <Button
               onClick={buyTokens}
