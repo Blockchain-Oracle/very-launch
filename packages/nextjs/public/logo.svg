@@ -1,0 +1,27 @@
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Rocket Icon -->
+  <g id="rocket-icon">
+    <!-- Rocket body -->
+    <path d="M30 10 L40 30 L40 45 C40 47 38 48 36 48 L24 48 C22 48 20 47 20 45 L20 30 Z" fill="#FF6B7A"/>
+    <!-- Rocket window -->
+    <circle cx="30" cy="28" r="4" fill="#1A1A1A"/>
+    <!-- Left fin -->
+    <path d="M20 35 L15 45 L20 42 Z" fill="#FF8A97"/>
+    <!-- Right fin -->
+    <path d="M40 35 L45 45 L40 42 Z" fill="#FF8A97"/>
+    <!-- Flame bottom -->
+    <path d="M25 48 L25 54 L30 52 L35 54 L35 48 Z" fill="#FFAA44" opacity="0.8"/>
+    <path d="M27 50 L27 56 L30 54 L33 56 L33 50 Z" fill="#FFD700" opacity="0.9"/>
+    <!-- Top cone -->
+    <path d="M30 5 L35 10 L25 10 Z" fill="#FF8A97"/>
+  </g>
+
+  <!-- Text: VeryLaunch -->
+  <g id="text" fill="#FFFFFF">
+    <text x="55" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="-0.5">Very</text>
+    <text x="110" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="300" letter-spacing="-0.5" fill="#FF6B7A">Launch</text>
+  </g>
+
+  <!-- Accent dot -->
+  <circle cx="195" cy="30" r="3" fill="#FF6B7A"/>
+</svg>

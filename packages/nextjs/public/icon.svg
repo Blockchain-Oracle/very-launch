@@ -1,0 +1,28 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark background circle -->
+  <circle cx="60" cy="60" r="60" fill="#1A1A1A"/>
+
+  <!-- Rocket Icon (centered and larger) -->
+  <g id="rocket-icon" transform="translate(30, 20)">
+    <!-- Rocket body -->
+    <path d="M30 10 L42 35 L42 55 C42 58 39 60 36 60 L24 60 C21 60 18 58 18 55 L18 35 Z" fill="#FF6B7A"/>
+    <!-- Rocket window -->
+    <circle cx="30" cy="38" r="6" fill="#242424"/>
+    <circle cx="30" cy="38" r="3" fill="#FF8A97" opacity="0.5"/>
+    <!-- Left fin -->
+    <path d="M18 45 L10 60 L18 55 Z" fill="#FF8A97"/>
+    <!-- Right fin -->
+    <path d="M42 45 L50 60 L42 55 Z" fill="#FF8A97"/>
+    <!-- Flame bottom (animated effect) -->
+    <path d="M24 60 L24 72 L30 68 L36 72 L36 60 Z" fill="#FFAA44" opacity="0.8"/>
+    <path d="M26 64 L26 75 L30 71 L34 75 L34 64 Z" fill="#FFD700" opacity="0.9"/>
+    <path d="M28 68 L28 78 L30 76 L32 78 L32 68 Z" fill="#FFFFFF" opacity="0.7"/>
+    <!-- Top cone -->
+    <path d="M30 4 L38 10 L22 10 Z" fill="#FF8A97"/>
+    <!-- Top tip highlight -->
+    <path d="M30 4 L34 8 L30 9 Z" fill="#FFFFFF" opacity="0.3"/>
+  </g>
+
+  <!-- Subtle orbit ring -->
+  <circle cx="60" cy="60" r="54" stroke="#FF6B7A" stroke-width="1" opacity="0.2" fill="none"/>
+</svg>
