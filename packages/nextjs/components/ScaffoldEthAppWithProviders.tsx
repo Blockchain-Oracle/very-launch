@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { Toaster as SonnerToaster } from "sonner";
 import { WagmiProvider } from "wagmi";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
+import { WepinProvider } from "~~/contexts/WepinContext";
 import { useInitializeNativeCurrencyPrice } from "~~/hooks/scaffold-eth";
 import { wagmiConfig } from "~~/services/web3/wagmiConfig";
 
@@ -87,7 +88,9 @@ export const ScaffoldEthAppWithProviders = ({ children }: { children: React.Reac
             }}
             className="sonner-toaster"
           />
-          <ScaffoldEthApp>{children}</ScaffoldEthApp>
+          <WepinProvider>
+            <ScaffoldEthApp>{children}</ScaffoldEthApp>
+          </WepinProvider>
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
